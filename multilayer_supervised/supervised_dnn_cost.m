@@ -25,7 +25,7 @@ z2 = stack{1}.W * a1 + repmat(stack{1}.b, 1, M);
 a2 = sigmoid(z2); % 256*M
 
 % output layer
-z3 = stack{2}.W * a2 + repmat(stack{2}.b, 1, M);
+z3 = stack{2}.W * a2 + repmat(stack{2}.b, 1, M); % 10*M
 a3 = sigmoid(z3); % 10*M
 pred_prob = a3;
 
@@ -36,23 +36,7 @@ if po
   return;
 end;
 
-%% compute cost
-% deltaW1 = zeros(size(W1));
-% deltab1 = zeros(size(b1));
-% deltaW2 = zeros(size(W2));
-% deltab2 = zeros(size(b2));
-% for m=1:M
-%   % output layer
-%   y = zeros(size(a3,1), 1);
-%   y(labels(m)) = 1;
-%   delta3 = -(y - a3(:,m)) .* (a3(:,m) .* (1 - a3(:,m))); % 10*1
-%   deltaW2 = deltaW2 + delta3 * a2(:,m)';
-%   deltab2 = deltab2 + delta3;
-%   % hidden layer
-%   delta2 = W2' * delta3 .* (a2(:,m) .* (1 - a2(:,m))); % 256*1
-%   deltaW1 = deltaW1 + delta2 * a1(:,m)'; % 256*784
-%   deltab1 = deltab1 + delta2; % 256*1
-% end
+%% compute cross entropy cost by softmax
 y = full(sparse(labels, 1:M, 1));
 p = exp(z3);
 p = bsxfun(@rdivide, p, sum(p));
