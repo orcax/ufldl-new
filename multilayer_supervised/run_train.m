@@ -13,7 +13,7 @@ addpath(genpath('../common/minFunc_2012/minFunc'));
 addpath(genpath('../cifar-10'));
 
 %% load mnist data
-[data_train, labels_train, data_test, labels_test] = load_preprocess_cifar10();
+[data_train, labels_train, data_test, labels_test] = load_preprocess_mnist();
 
 %% populate ei with the network architecture to train
 % ei is a structure you can use to store hyperparameters of the network
